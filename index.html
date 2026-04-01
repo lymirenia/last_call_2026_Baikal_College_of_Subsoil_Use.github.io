@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Приглашение на последний звонок | Феникс • ВСГИК</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== СБРОС И БАЗА ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0f;
+            color: #ececec;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1e2a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c9a87b;
+            border-radius: 8px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        section {
+            position: relative;
+            padding: 80px 0;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.8s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gold-text {
+            background: linear-gradient(135deg, #e9c891, #c9a87b, #e2bc7c);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(201, 168, 123, 0.12);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(201, 168, 123, 0.5);
+            padding: 14px 34px;
+            border-radius: 48px;
+            font-weight: 500;
+            font-size: 1rem;
+            color: #f5e6d3;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            letter-spacing: 0.3px;
+        }
+        .btn:hover {
+            background: #c9a87b;
+            border-color: #c9a87b;
+            color: #0a0a0f;
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -8px rgba(201,168,123,0.4);
+        }
+        .btn-primary {
+            background: #c9a87b;
+            border-color: #c9a87b;
+            color: #0a0a0f;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background: #e2bc7c;
+            transform: translateY(-2px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 0 80px;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, #1f1b16, #030202);
+            z-index: -2;
+        }
+        .hero-bg::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" opacity="0.08"><path fill="none" stroke="%23c9a87b" stroke-width="1.2" d="M200,200 L600,200 M200,400 L600,400 M200,600 L600,600 M200,800 L600,800 M400,200 L400,800"/><circle cx="400" cy="500" r="80" stroke="%23c9a87b" fill="none"/><path d="M400,420 L400,580 M330,500 L470,500" stroke="%23c9a87b"/></svg>') repeat;
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 780px;
+        }
+        .hero-sub {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #c9a87b;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin: 20px 0 24px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            color: #cfcfdd;
+            margin-bottom: 2rem;
+        }
+        .address-highlight {
+            background: rgba(201, 168, 123, 0.18);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 8px 20px;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .event-card {
+            background: rgba(20, 18, 24, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 1px solid rgba(201, 168, 123, 0.25);
+            padding: 40px 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+            transition: all 0.25s ease;
+        }
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .event-icon {
+            font-size: 2.2rem;
+            color: #c9a87b;
+        }
+        .event-detail h4 {
+            font-size: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b9af9a;
+        }
+        .event-detail p {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-top: 6px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .map-card {
+            background: #111016;
+            border-radius: 48px;
+            padding: 30px;
+            border: 1px solid #2a2520;
+            transition: all 0.25s ease;
+        }
+        .address-block {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .address-text i {
+            margin-right: 12px;
+            color: #c9a87b;
+            width: 28px;
+        }
+        .direction-link {
+            background: rgba(201,168,123,0.1);
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #e9c891;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .direction-link:hover {
+            background: #c9a87b;
+            color: #0a0a0f;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #07060a;
+            border-top: 1px solid rgba(201, 168, 123, 0.25);
+            padding: 50px 0 35px;
+            margin-top: 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: start;
+            gap: 40px;
+        }
+        
+        .footer-col-left {
+            text-align: left;
+        }
+        
+        .github-footer {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(201, 168, 123, 0.08);
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #e2bc7c;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(201, 168, 123, 0.2);
+        }
+        
+        .github-footer:hover {
+            background: rgba(201, 168, 123, 0.2);
+            transform: translateX(5px);
+            border-color: #c9a87b;
+        }
+        
+        .github-footer i {
+            font-size: 1.6rem;
+        }
+        
+        .footer-col-center {
+            text-align: center;
+            border-left: 1px solid rgba(201, 168, 123, 0.2);
+            border-right: 1px solid rgba(201, 168, 123, 0.2);
+            padding: 0 30px;
+        }
+        
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo span {
+            color: #c9a87b;
+        }
+        
+        .footer-info-block {
+            margin: 18px 0;
+        }
+        
+        .footer-info-block p {
+            margin: 8px 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #b9b0a2;
+        }
+        
+        .footer-info-block i {
+            color: #c9a87b;
+            width: 24px;
+            margin-right: 6px;
+        }
+        
+        .initiator-name {
+            color: #e9c891;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+        }
+        
+        .developers {
+            background: rgba(201, 168, 123, 0.05);
+            padding: 12px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin: 12px 0 8px;
+            font-size: 0.85rem;
+        }
+        
+        .footer-divider-light {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a87b, transparent);
+            margin: 16px auto;
+        }
+        
+        .footer-col-right {
+            text-align: right;
+        }
+        
+        .event-badge-footer {
+            background: rgba(201, 168, 123, 0.12);
+            border-radius: 32px;
+            padding: 16px 20px;
+            display: inline-block;
+            text-align: center;
+            border: 1px solid rgba(201, 168, 123, 0.25);
+        }
+        
+        .event-badge-footer .date-large {
+            font-size: 1.8rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: #e9c891;
+            line-height: 1.2;
+        }
+        
+        .event-badge-footer .event-name {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .event-badge-footer .time-place {
+            font-size: 0.8rem;
+            color: #a09887;
+            margin-top: 10px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(201, 168, 123, 0.12);
+            font-size: 0.75rem;
+            color: #6a6560;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                padding: 0 24px;
+            }
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+            .event-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            section {
+                padding: 60px 0;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+            .footer-col-left {
+                text-align: center;
+            }
+            .footer-col-right {
+                text-align: center;
+            }
+            .footer-col-center {
+                border-left: none;
+                border-right: none;
+                padding: 20px 0;
+                border-top: 1px solid rgba(201, 168, 123, 0.2);
+                border-bottom: 1px solid rgba(201, 168, 123, 0.2);
+            }
+        }
+        @media (max-width: 550px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .event-detail p {
+                font-size: 1.1rem;
+            }
+        }
+        .invitation-badge {
+            display: inline-block;
+            background: rgba(201,168,123,0.2);
+            border-radius: 40px;
+            padding: 5px 18px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .highlight-warm {
+            border-left: 3px solid #c9a87b;
+            padding-left: 18px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+        <div class="hero-content fade-up">
+            <div class="invitation-badge"><i class="fas fa-graduation-cap"></i>   С уважением и трепетом</div>
+            <div class="hero-sub"><i class="fas fa-feather-alt"></i>   Последний звонок 2026</div>
+            <h1>Концертно-театральный <span class="gold-text">центр «Феникс»</span></h1>
+            <p>Дорогие преподаватели СПО! Для нас большая честь пригласить вас на праздник Последнего звонка. Этот день — дань вашему терпению, мудрости и теплу. Пусть он подарит яркие эмоции и станет началом новых творческих побед.</p>
+            <div class="address-highlight">
+                <i class="fas fa-map-marker-alt" style="color:#c9a87b"></i> г. Улан-Удэ, ул. Терешковой 1, ВСГИК, 1 этаж
+                <i class="fas fa-calendar-alt" style="margin-left:12px;"></i> 7 апреля 2026
+                <i class="fas fa-clock"></i> 15:00
+            </div>
+        </div>
+        <div class="event-card fade-up">
+            <div class="event-detail">
+                <div class="event-icon"><i class="fas fa-chalkboard-user"></i></div>
+                <div><h4>Для кого</h4><p>Преподаватели СПО</p></div>
+            </div>
+            <div class="event-detail">
+                <div class="event-icon"><i class="fas fa-calendar-week"></i></div>
+                <div><h4>Дата</h4><p>7 апреля 2026</p></div>
+            </div>
+            <div class="event-detail">
+                <div class="event-icon"><i class="fas fa-hourglass-half"></i></div>
+                <div><h4>Начало</h4><p>15:00</p></div>
+            </div>
+            <div class="event-detail">
+                <div class="event-icon"><i class="fas fa-building"></i></div>
+                <div><h4>Локация</h4><p>ВСГИК, 1 этаж</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="container">
+        <div class="map-card fade-up">
+            <div class="address-block">
+                <div class="address-text">
+                    <p><i class="fas fa-location-dot"></i> <strong>Республика Бурятия, г. Улан-Удэ, ул. Терешковой, д. 1</strong></p>
+                    <p><i class="fas fa-university"></i> Восточно-Сибирский государственный институт культуры (ВСГИК)</p>
+                    <p><i class="fas fa-door-open"></i> Вход со стороны центрального крыльца, 1 этаж, концертно-театральный центр «Феникс»</p>
+                    <p><i class="fas fa-clock"></i> Начало торжества — 7 апреля в 15:00 (сбор гостей с 14:30)</p>
+                </div>
+                <div>
+                    <a href="https://go.2gis.com/HUqAs" target="_blank" class="direction-link" rel="noopener noreferrer"><i class="fas fa-map"></i> Открыть карту (2ГИС)</a>
+                </div>
+            </div>
+            <div style="margin-top: 30px; background: #1e1b20; border-radius: 28px; min-height: 80px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem; border: 1px dashed #c9a87b; flex-wrap: wrap; padding: 20px;">
+                <i class="fas fa-bus" style="font-size: 1.5rem; color:#c9a87b;"></i> Остановка «ВСГИК» (автобусы № 37, 56, 77) / пешком 2 минуты
+                <i class="fas fa-car" style="margin-left: 8px;"></i> Парковка на прилегающей территории
+                <i class="fas fa-wheelchair" style="margin-left: 8px;"></i> Доступная среда
+            </div>
+            <div class="highlight-warm" style="margin-top: 24px; font-size: 0.9rem; color: #d9cdb0;">
+                <i class="fas fa-music"></i> В программе: вокальные номера, поздравления от студентов, тёплая атмосфера
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col-left">
+                <a href="https://github.com/lymirenia" target="_blank" rel="noopener noreferrer" class="github-footer">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub / lymirenia</span>
+                </a>
+            </div>
+            
+            <div class="footer-col-center">
+                <div class="footer-logo">«<span>Феникс</span>»</div>
+                <div class="footer-info-block">
+                    <p><i class="fas fa-star-of-life"></i> Сайт создан по инициативе <span class="initiator-name">Капустиной Л.Н.</span></p>
+                    <p><i class="fas fa-heart" style="color: #c9a87b;"></i>  Творческое приглашение для преподавателей СПО</p>
+                </div>
+                <div class="developers">
+                    <i class="fas fa-code"></i> Разработка: Колтунов Денис (3ИС23а) и Светлана Анисимова (4ИС23а)
+                </div>
+                <div class="footer-divider-light"></div>
+                <div class="footer-info-block">
+                    <p><i class="fas fa-map-marker-alt"></i> г. Улан-Удэ, ул. Терешковой, 1, ВСГИК, 1 этаж</p>
+                </div>
+            </div>
+            
+            <div class="footer-col-right">
+                <div class="event-badge-footer">
+                    <div class="date-large">7 апреля 2026</div>
+                    <div class="event-name">Последний звонок</div>
+                    <div class="time-place">15:00  ·  Концертно-театральный центр</div>
+                    <div style="margin-top: 10px; font-size: 0.7rem; opacity: 0.7;"><i class="fas fa-ticket-alt"></i> вход свободный</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2026 Концертно-театральный центр «Феникс» · Восточно-Сибирский государственный институт культуры</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    (function() {
+        const fadeElements = document.querySelectorAll('.fade-up');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: "0px 0px -30px 0px" });
+        
+        fadeElements.forEach(el => observer.observe(el));
+        
+        const cards = document.querySelectorAll('.event-card, .map-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+                card.style.transition = 'transform 0.25s ease, box-shadow 0.3s';
+                if(card.classList.contains('map-card')) {
+                    card.style.boxShadow = '0 20px 30px -15px rgba(0,0,0,0.5)';
+                } else {
+                    card.style.boxShadow = '0 20px 30px -12px rgba(0,0,0,0.4)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = 'none';
+            });
+        });
+        
+        const heroTitle = document.querySelector('.hero h1');
+        if(heroTitle) {
+            heroTitle.style.opacity = '0';
+            heroTitle.style.transform = 'translateY(22px)';
+            setTimeout(() => {
+                heroTitle.style.transition = 'opacity 1s ease, transform 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+                heroTitle.style.opacity = '1';
+                heroTitle.style.transform = 'translateY(0)';
+            }, 180);
+        }
+        
+        const mapLink = document.querySelector('.direction-link');
+        if(mapLink) {
+            mapLink.addEventListener('click', (e) => {
+                console.log("Открытие карты 2ГИС");
+            });
+        }
+        
+        const now = new Date();
+        const eventDate = new Date(2026, 3, 7);
+        if(now.getFullYear() === 2026 && now.getMonth() === 3 && now.getDate() === 7) {
+            const heroContent = document.querySelector('.hero-content p');
+            if(heroContent) {
+                const msg = document.createElement('div');
+                msg.style.marginTop = '1rem';
+                msg.style.background = '#c9a87b20';
+                msg.style.padding = '10px 18px';
+                msg.style.borderRadius = '40px';
+                msg.style.fontSize = '0.9rem';
+                msg.innerHTML = '<i class="fas fa-bell"></i> Сегодня долгожданный праздник! Ждём вас в 15:00!';
+                heroContent.insertAdjacentElement('afterend', msg);
+            }
+        }
+    })();
+</script>
+</body>
+</html>
